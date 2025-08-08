@@ -1,113 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Totally Useless Tour Planner</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #fceabb, #f8b500);
-            text-align: center;
-            padding: 50px;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <title>✨ Totally Useless Tour Planner ✨</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: radial-gradient(circle at top, #ffeaa7, #fab1a0);
+      text-align: center;
+      padding: 60px 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        h1 {
-            font-size: 2.5em;
-            color: #6a0572;
-            margin-bottom: 10px;
-        }
+    h1 {
+      font-size: 3em;
+      color: #6c5ce7;
+      animation: popIn 1s ease-out;
+    }
 
-        p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      color: #2d3436;
+      animation: fadeIn 2s;
+    }
 
-        input, button {
-            padding: 12px 18px;
-            font-size: 1em;
-            border: none;
-            border-radius: 10px;
-            margin: 10px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
+    input, button {
+      padding: 14px 20px;
+      margin: 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
 
-        input {
-            width: 250px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    input {
+      width: 240px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
 
-        input:focus {
-            box-shadow: 0 0 10px rgba(106, 5, 114, 0.5);
-        }
+    input:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(108, 92, 231, 0.6);
+    }
 
-        button {
-            background-color: #6a0572;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
+    button {
+      background-color: #fd79a8;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-        button:hover {
-            background-color: #a64ac9;
-            transform: scale(1.05);
-        }
+    button:hover {
+      background-color: #e84393;
+      transform: scale(1.1) rotate(-2deg);
+    }
 
-        .plan {
-            margin-top: 30px;
-            padding: 25px;
-            font-weight: bold;
-            color: #4b0082;
-            background-color: #fff0f5;
-            border: 2px dashed #a64ac9;
-            border-radius: 15px;
-            display: inline-block;
-            width: 60%;
-            animation: fadeIn 0.8s ease-in-out;
-        }
+    .plan {
+      margin-top: 40px;
+      padding: 25px;
+      font-weight: bold;
+      background: #ffecec;
+      color: #d63031;
+      border: 2px dotted #ff7675;
+      border-radius: 20px;
+      display: inline-block;
+      width: 60%;
+      max-width: 500px;
+      animation: bounceIn 0.8s ease-out;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* Animated background globe */
+    .globe {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 120px;
+      height: 120px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/240px-The_Earth_seen_from_Apollo_17.jpg') no-repeat center/cover;
+      border-radius: 50%;
+      animation: spin 10s linear infinite;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-    <h1>✨ Totally Useless Tour Planner ✨</h1>
-    <p>Enter your details for a nonsense travel experience you'll never forget</p>
-    
-    <input id="destination" placeholder="🗺️ Destination"><br>
-    <input id="date" type="date"><br>
-    <input id="budget" placeholder="💰 Budget"><br>
-    
-    <button onclick="generatePlan()">🎉 Get My Plan</button>
-    
-    <div class="plan" id="plan"></div>
-    
-    <script>
-        const activities = [
-            "Swim in invisible water 🫧",
-            "Climb an upside-down tree 🌳",
-            "Attend a snail race 🐌",
-            "Have dinner with a statue 🗿",
-            "Search for WiFi in a desert 🏜️",
-            "Sing karaoke with strangers in an elevator 🎤",
-            "Visit a museum of lost socks 🧦",
-            "Spend 3 hours staring at clouds ☁️"
-        ];
+  <div class="globe"></div>
 
-        function generatePlan() {
-            let dest = document.getElementById("destination").value || "Nowhere";
-            let activity1 = activities[Math.floor(Math.random() * activities.length)];
-            let activity2 = activities[Math.floor(Math.random() * activities.length)];
-            let activity3 = activities[Math.floor(Math.random() * activities.length)];
-            
-            document.getElementById("plan").innerHTML = 
-                `Your Totally Useless Trip to <b>${dest}</b>:<br><br>
-                🗓️ Day 1: ${activity1}<br>
-                🗓️ Day 2: ${activity2}<br>
-                🗓️ Day 3: ${activity3}`;
+  <h1>🌍 Totally Useless Tour Planner 🌍</h1>
+  <p>Enter your absurd travel plan details for a once-in-a-never experience!</p>
+
+  <input id="destination" placeholder="🗺️ Destination"><br>
+  <input id="date" type="date"><br>
+  <input id="budget" placeholder="💰 Budget"><br>
+
+  <button onclick="generatePlan()">✨ Get My Plan</button>
+
+  <div class="plan" id="plan"></div>
+
+  <script>
+    const activities = [
+      "Swim in invisible water 🫧",
+      "Climb an upside-down tree 🌳",
+      "Attend a snail race 🐌",
+      "Have dinner with a statue 🗿",
+      "Search for WiFi in a desert 🏜️",
+      "Sing karaoke in an elevator 🎤",
+      "Visit a museum of lost socks 🧦",
+      "Stare at clouds for 3 hours ☁️"
+    ];
+
+    function generatePlan() {
+      const dest = document.getElementById("destination").value || "the Void";
+      const activity1 = randomActivity();
+      const activity2 = randomActivity();
+      const activity3 = randomActivity();
+
+      // Confetti effect (emojis)
+      launchEmojiRain();
+
+      document.getElementById("plan").innerHTML = `
+        Your Ridiculously Useless Trip to <b>${dest}</b>:<br><br>
+        📆 Day 1: ${activity1}<br>
+        📆 Day 2: ${activity2}<br>
+        📆 Day 3: ${activity3}
+      `;
+    }
+
+    function randomActivity() {
+      return activities[Math.floor(Math.random() * activities.length)];
+    }
+
+    function launchEmojiRain() {
+      for (let i = 0; i < 20; i++) {
+        const emoji = document.createElement('div');
+        emoji.textContent = "🎉";
+        emoji.style.position = 'fixed';
+        emoji.style.top = '-50px';
+        emoji.style.left = Math.random() * window.innerWidth + 'px';
+        emoji.style.fontSize = '24px';
+        emoji.style.zIndex = 999;
+        emoji.style.animation = `drop 1.5s ease-out forwards ${i * 0.1}s`;
+        document.body.appendChild(emoji);
+
+        emoji.addEventListener('animationend', () => emoji.remove());
+      }
+    }
+
+    // Emoji drop animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes drop {
+        to {
+          top: 100vh;
+          opacity: 0;
+          transform: rotate(360deg);
         }
-    </script>
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
