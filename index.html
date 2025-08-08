@@ -1,166 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>🧳 Totally Useless Tour Planner</title>
-  <style>
-    /* 🌍 Background with travel map texture */
-    body {
-      margin: 0;
-      padding: 60px 20px;
-      font-family: 'Trebuchet MS', sans-serif;
-      background: url('https://www.transparenttextures.com/patterns/map.png'), linear-gradient(to bottom right, #fceabb, #f8b500);
-      background-repeat: repeat;
-      text-align: center;
-      color: #2d3436;
-      overflow-x: hidden;
-    }
+    <title>Totally Useless Tour Planner</title>
+    <style>
+        body {
+            font-family: Comic Sans MS, cursive;
+            text-align: center;
+            margin: 50px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3d/BlankMap-World-noborders.png');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+        }
 
-    h1 {
-      font-size: 3.2em;
-      color: #6c5ce7;
-      text-shadow: 2px 2px #ffeaa7;
-      animation: popIn 1.2s ease-out;
-    }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+        }
 
-    p {
-      font-size: 1.3em;
-      margin-bottom: 30px;
-      color: #444;
-    }
+        button {
+            background-color: #ff69b4;
+            color: white;
+            cursor: pointer;
+        }
 
-    input, button {
-      padding: 14px 22px;
-      margin: 12px;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 15px;
-      outline: none;
-      transition: 0.3s ease;
-    }
+        button:hover {
+            background-color: #ff1493;
+        }
 
-    input {
-      width: 250px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-      background-color: #fefefe;
-    }
+        .plan, .packing, .destination {
+            margin-top: 20px;
+            font-weight: bold;
+            color: purple;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+        }
 
-    input:focus {
-      transform: scale(1.05);
-      box-shadow: 0 0 12px #6c5ce7;
-    }
-
-    button {
-      background: linear-gradient(135deg, #00b894, #00cec9);
-      color: #fff;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    button:hover {
-      background: linear-gradient(135deg, #0984e3, #6c5ce7);
-      transform: scale(1.08);
-    }
-
-    .plan {
-      margin-top: 40px;
-      padding: 30px;
-      font-weight: bold;
-      background: rgba(255, 255, 255, 0.8);
-      border: 2px dashed #a29bfe;
-      color: #d63031;
-      border-radius: 20px;
-      display: inline-block;
-      width: 70%;
-      max-width: 500px;
-      animation: bounceIn 1s ease-out;
-    }
-
-    @keyframes bounceIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      50% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    /* Emoji confetti drop */
-    @keyframes drop {
-      to {
-        top: 100vh;
-        opacity: 0;
-        transform: rotate(360deg);
-      }
-    }
-  </style>
+        .fun-title {
+            font-size: 32px;
+            color: darkmagenta;
+            text-shadow: 2px 2px lightpink;
+        }
+    </style>
 </head>
 <body>
+    <h1 class="fun-title">🎒 Totally Useless Tour Planner 🌍</h1>
+    <p>Enter your details for a perfectly pointless travel plan</p>
+    
+    <input id="destination" placeholder="Dream Destination"><br>
+    <input id="date" type="date"><br>
+    <input id="budget" placeholder="Budget"><br>
+    
+    <button onclick="generatePlan()">Generate Plan</button>
+    <button onclick="spinDestination()">🎡 Spin Destination</button>
+    <button onclick="generatePackingList()">🎒 Packing List</button>
+    
+    <div class="plan" id="plan"></div>
+    <div class="destination" id="spinResult"></div>
+    <div class="packing" id="packingList"></div>
 
-  <h1>✈️ Totally Useless Tour Planner</h1>
-  <p>Plan your legendary nonsense trip today 🌍</p>
+    <script>
+        const activities = [
+            "Swim in invisible water",
+            "Climb an upside-down tree",
+            "Attend a snail race",
+            "Have dinner with a statue",
+            "Search for WiFi in a desert",
+            "Sing karaoke with strangers in an elevator",
+            "Visit a museum of lost socks",
+            "Spend 3 hours staring at clouds"
+        ];
 
-  <input id="destination" placeholder="🗺️ Destination"><br>
-  <input id="date" type="date"><br>
-  <input id="budget" placeholder="💰 Budget"><br>
+        const destinations = [
+            "Nowhereland",
+            "The Bermuda Snackangle",
+            "Your Neighbor's Backyard",
+            "Mount Disappointment",
+            "Couch Islands",
+            "The Great Wall of Doodles",
+            "Area 52 (Shh!)",
+            "Under the Bed"
+        ];
 
-  <button onclick="generatePlan()">🎉 Get My Plan</button>
+        const packingItems = [
+            "Left shoe only",
+            "Toothbrush with no bristles",
+            "Emergency glitter bomb",
+            "Waterproof towel",
+            "Invisible umbrella",
+            "Fake passport for unicorns",
+            "One sock (mystery size)",
+            "Kite with no string",
+            "Screaming rubber chicken",
+            "Glow-in-the-dark flip flops"
+        ];
 
-  <div class="plan" id="plan"></div>
+        function generatePlan() {
+            let dest = document.getElementById("destination").value || "somewhere absurd";
+            let activity1 = activities[Math.floor(Math.random() * activities.length)];
+            let activity2 = activities[Math.floor(Math.random() * activities.length)];
+            let activity3 = activities[Math.floor(Math.random() * activities.length)];
+            
+            document.getElementById("plan").innerHTML = 
+                `Your trip to <b>${dest}</b>:<br>
+                🌞 Day 1: ${activity1}<br>
+                🌴 Day 2: ${activity2}<br>
+                🏖️ Day 3: ${activity3}`;
+        }
 
-  <script>
-    const activities = [
-      "Swim in invisible water 🫧",
-      "Climb an upside-down tree 🌳",
-      "Attend a snail race 🐌",
-      "Have dinner with a statue 🗿",
-      "Search for WiFi in a desert 🏜️",
-      "Sing karaoke in an elevator 🎤",
-      "Visit a museum of lost socks 🧦",
-      "Stare at clouds for 3 hours ☁️",
-      "Try to race a turtle 🐢",
-      "Interview a pigeon in the park 🐦",
-      "High-five your own shadow ✋"
-    ];
+        function spinDestination() {
+            let randomDestination = destinations[Math.floor(Math.random() * destinations.length)];
+            document.getElementById("spinResult").innerHTML =
+                `🎯 Your spun destination is: <b>${randomDestination}</b>.<br>Pack your nonsense and GO!`;
+        }
 
-    function generatePlan() {
-      const dest = document.getElementById("destination").value || "Narnia";
-      const activity1 = getActivity();
-      const activity2 = getActivity();
-      const activity3 = getActivity();
-
-      launchEmojiRain();
-
-      document.getElementById("plan").innerHTML = `
-        Your Fantastically Useless Trip to <b>${dest}</b>:<br><br>
-        📅 Day 1: ${activity1}<br>
-        📅 Day 2: ${activity2}<br>
-        📅 Day 3: ${activity3}
-      `;
-    }
-
-    function getActivity() {
-      return activities[Math.floor(Math.random() * activities.length)];
-    }
-
-    function launchEmojiRain() {
-      for (let i = 0; i < 25; i++) {
-        const emoji = document.createElement('div');
-        emoji.textContent = "🌈";
-        emoji.style.position = 'fixed';
-        emoji.style.top = '-50px';
-        emoji.style.left = Math.random() * window.innerWidth + 'px';
-        emoji.style.fontSize = '26px';
-        emoji.style.zIndex = 9999;
-        emoji.style.animation = `drop 2s ease-out forwards ${i * 0.1}s`;
-        document.body.appendChild(emoji);
-
-        emoji.addEventListener('animationend', () => emoji.remove());
-      }
-    }
-  </script>
+        function generatePackingList() {
+            let shuffled = packingItems.sort(() => 0.5 - Math.random());
+            let selected = shuffled.slice(0, 5); // pick 5 random items
+            document.getElementById("packingList").innerHTML =
+                `🧳 Your Totally Useless Packing List:<br><ul>${selected.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        }
+    </script>
 </body>
 </html>
