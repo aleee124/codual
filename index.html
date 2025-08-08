@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Totally Useless Tour Planner</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin: 50px; }
+        input, button { padding: 10px; margin: 5px; }
+        .plan { margin-top: 20px; font-weight: bold; color: purple; }
+    </style>
+</head>
+<body>
+    <h1>Useless Tour Planner</h1>
+    <p>Enter your details for a completely fake travel plan</p>
+    
+    <input id="destination" placeholder="Destination"><br>
+    <input id="date" type="date"><br>
+    <input id="budget" placeholder="Budget"><br>
+    
+    <button onclick="generatePlan()">Get My Plan</button>
+    
+    <div class="plan" id="plan"></div>
+    
+    <script>
+        const activities = [
+            "Swim in invisible water",
+            "Climb an upside-down tree",
+            "Attend a snail race",
+            "Have dinner with a statue",
+            "Search for WiFi in a desert",
+            "Sing karaoke with strangers in an elevator",
+            "Visit a museum of lost socks",
+            "Spend 3 hours staring at clouds"
+        ];
+
+        function generatePlan() {
+            let dest = document.getElementById("destination").value;
+            let activity1 = activities[Math.floor(Math.random() * activities.length)];
+            let activity2 = activities[Math.floor(Math.random() * activities.length)];
+            let activity3 = activities[Math.floor(Math.random() * activities.length)];
+            
+            document.getElementById("plan").innerHTML = 
+                `Your Fake Trip to <b>${dest}</b>:<br>
+                Day 1: ${activity1}<br>
+                Day 2: ${activity2}<br>
+                Day 3: ${activity3}`;
+        }
+    </script>
+</body>
+</html>
