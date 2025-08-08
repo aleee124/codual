@@ -1,145 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Ultimate Silly Trip Spinner ✨</title>
+    <title>Funny Trip Planner</title>
     <style>
         body {
-            font-family: 'Comic Sans MS', cursive;
-            margin: 0;
-            padding: 0;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution_gray_political.svg/2000px-World_map_-_low_resolution_gray_political.svg.png');
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/World_map_blank_without_borders.svg/2560px-World_map_blank_without_borders.svg.png') no-repeat center center fixed;
             background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            padding: 30px;
-            display: flex;
-            gap: 40px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            animation: popIn 1s ease;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .column {
-            flex: 1;
             text-align: center;
+            padding: 30px;
+            color: #4B0082;
         }
 
         h1 {
+            font-size: 3em;
             color: #ff1493;
-            font-size: 40px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px white;
+            text-shadow: 2px 2px #fff;
         }
 
         input, button {
             padding: 12px;
-            border-radius: 10px;
-            border: 2px dashed #ff69b4;
             margin: 10px;
-            font-size: 16px;
-            background-color: #fff0f5;
-            color: #8b008b;
+            font-size: 1.1em;
+            border-radius: 10px;
+            border: none;
         }
 
         button {
             background-color: #ff69b4;
             color: white;
-            font-weight: bold;
             cursor: pointer;
-            animation: pulse 1s infinite;
+            transition: transform 0.2s ease-in-out;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        button:hover {
+            transform: scale(1.1);
+            background-color: #ff85c1;
         }
 
-        #wheel {
-            width: 250px;
-            height: 250px;
-            border: 10px solid #ff69b4;
+        #spinner {
+            width: 200px;
+            height: 200px;
+            border: 10px dashed #ffa500;
             border-radius: 50%;
-            position: relative;
-            margin: auto;
-            overflow: hidden;
-            animation: spinEnter 2s ease;
+            margin: 20px auto;
+            animation: spin 4s linear infinite;
         }
 
-        @keyframes spinEnter {
-            from { transform: rotate(360deg); opacity: 0; }
-            to { transform: rotate(0deg); opacity: 1; }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(1440deg); }
         }
 
-        .spin-result {
-            font-size: 20px;
-            color: #4b0082;
-            font-weight: bold;
+        .plan, .packing-list {
             margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #9932cc;
+            background-color: rgba(255,255,255,0.7);
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="column">
-            <h1>🌺 Spin Your Destination</h1>
-            <input id="destinationInput" placeholder="Or type a place">
-            <button onclick="spinWheel()">🌟 Spin The Wheel</button>
-            <div id="wheel"></div>
-            <div class="spin-result" id="spinResult"></div>
-        </div>
+    <h1>😂 Totally Useless Trip Planner</h1>
 
-        <div class="column">
-            <h1>🏡 Funny Packing List</h1>
-            <button onclick="generatePackingList()">🎒 Generate List</button>
-            <div id="packingList"></div>
-        </div>
+    <div>
+        <p>Don't know where to go? Let fate decide!</p>
+        <button onclick="startSpinning()">🎡 Spin for Destination</button>
+        <div id="spinner"></div>
+        <div class="plan" id="finalDestination"></div>
+    </div>
+
+    <div>
+        <p>Already have a place in mind? Type it below!</p>
+        <input id="destination" placeholder="Type a destination">
+        <input id="date" type="date">
+        <input id="budget" placeholder="Budget">
+        <button onclick="generatePlan()">Get My Plan</button>
+    </div>
+
+    <div class="plan" id="plan"></div>
+
+    <div>
+        <p>Don't forget these essential (and totally unnecessary) items!</p>
+        <button onclick="showPackingList()">🎒 Get Packing List</button>
+        <div class="packing-list" id="packing"></div>
     </div>
 
     <script>
-        const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Chad", "Chile", "China", "Colombia", "Comoros", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mexico", "Micronesia", "Moldova"];
+        const activities = [
+            "Swim in invisible water",
+            "Climb an upside-down tree",
+            "Attend a snail race",
+            "Have dinner with a statue",
+            "Search for WiFi in a desert",
+            "Sing karaoke with strangers in an elevator",
+            "Visit a museum of lost socks",
+            "Spend 3 hours staring at clouds"
+        ];
 
         const packingItems = [
-            "Banana umbrella 🍌🌧️", "Invisible sunscreen 🚫🌞", "Jetpack toothbrush 🚀🪪", "Portable nap zone 🌚", "Left shoe only 🥾", "Cat translator 😺🎧", "Rainbow raincoat 🌈🌧", "Emergency glitter bomb 🎇", "Toilet paper crown 🪼👑", "Marshmallow pillow 🥜"];
+            "Banana costume",
+            "Inflatable unicorn",
+            "Pet rock",
+            "Glow-in-the-dark socks",
+            "Emergency rubber chicken",
+            "Invisible map",
+            "Singing toothbrush",
+            "Fake passport for fun"
+        ];
 
-        function spinWheel() {
-            const input = document.getElementById("destinationInput").value;
-            let selected;
-            if (input.trim() !== "") {
-                selected = input;
-            } else {
-                selected = countries[Math.floor(Math.random() * countries.length)];
-            }
-            const wheel = document.getElementById("wheel");
-            const spinDegrees = 3600 + Math.floor(Math.random() * 360);
-            wheel.style.transition = "transform 4s ease-out";
-            wheel.style.transform = `rotate(${spinDegrees}deg)`;
+        const realCountries = [
+            "Brazil", "Canada", "France", "Germany", "India", "Italy", "Japan", "Kenya", "Mexico", "Nepal",
+            "Australia", "Thailand", "South Africa", "Argentina", "Spain", "Sweden", "Norway", "China", "Egypt", "Peru",
+            "Turkey", "Russia", "Greece", "Netherlands", "Poland", "Switzerland", "Portugal", "Finland", "Morocco", "Colombia",
+            "Philippines", "Vietnam", "South Korea", "New Zealand", "Ireland", "Malaysia", "Indonesia", "Iceland", "Chile", "Saudi Arabia",
+            "UAE", "Qatar", "Singapore", "Denmark", "Ukraine", "Israel", "Iran", "Belgium", "Austria", "Hungary",
+            "Czech Republic", "Romania", "Slovakia", "Serbia", "Croatia", "Slovenia", "Bulgaria", "Estonia", "Latvia", "Lithuania",
+            "Sri Lanka", "Bangladesh", "Pakistan", "Afghanistan", "Kazakhstan", "Uzbekistan", "Turkmenistan", "Iraq", "Jordan", "Lebanon",
+            "Ethiopia", "Nigeria", "Ghana", "Tanzania", "Uganda", "Zimbabwe", "Zambia", "Mozambique", "Namibia", "Botswana",
+            "Cuba", "Jamaica", "Haiti", "Panama", "Costa Rica", "El Salvador", "Guatemala", "Honduras", "Paraguay", "Uruguay"
+        ];
 
+        function startSpinning() {
+            document.getElementById("spinner").style.animation = "spin 4s linear infinite";
             setTimeout(() => {
-                document.getElementById("spinResult").innerHTML = `🌍 Pack your bags! You're going to <b>${selected}</b>!`;
-            }, 4200);
+                document.getElementById("spinner").style.animation = "none";
+                const country = realCountries[Math.floor(Math.random() * realCountries.length)];
+                document.getElementById("finalDestination").innerHTML = `🎯 Your random destination is: <b>${country}</b>!`;
+                document.getElementById("destination").value = country;
+            }, 4000);
         }
 
-        function generatePackingList() {
-            const list = packingItems.sort(() => 0.5 - Math.random()).slice(0, 5);
-            document.getElementById("packingList").innerHTML =
-                "<ul style='text-align: left; font-size: 18px; color: #ff1493;'>" +
-                list.map(item => `<li>${item}</li>`).join('') +
-                "</ul>";
+        function generatePlan() {
+            let dest = document.getElementById("destination").value || "Nowhere";
+            let activity1 = activities[Math.floor(Math.random() * activities.length)];
+            let activity2 = activities[Math.floor(Math.random() * activities.length)];
+            let activity3 = activities[Math.floor(Math.random() * activities.length)];
+
+            document.getElementById("plan").innerHTML = 
+                `Your Ridiculous Trip to <b>${dest}</b>:<br>
+                Day 1: ${activity1}<br>
+                Day 2: ${activity2}<br>
+                Day 3: ${activity3}`;
+        }
+
+        function showPackingList() {
+            let funnyItems = [];
+            while (funnyItems.length < 5) {
+                let item = packingItems[Math.floor(Math.random() * packingItems.length)];
+                if (!funnyItems.includes(item)) funnyItems.push(item);
+            }
+            document.getElementById("packing").innerHTML = funnyItems.map(i => `👜 ${i}`).join("<br>");
         }
     </script>
 </body>
