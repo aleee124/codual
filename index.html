@@ -2,81 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>✨ Totally Useless Tour Planner ✨</title>
+  <title>🧳 Totally Useless Tour Planner</title>
   <style>
+    /* 🌍 Background with travel map texture */
     body {
       margin: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: radial-gradient(circle at top, #ffeaa7, #fab1a0);
-      text-align: center;
       padding: 60px 20px;
+      font-family: 'Trebuchet MS', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/map.png'), linear-gradient(to bottom right, #fceabb, #f8b500);
+      background-repeat: repeat;
+      text-align: center;
+      color: #2d3436;
       overflow-x: hidden;
-      position: relative;
     }
 
     h1 {
-      font-size: 3em;
+      font-size: 3.2em;
       color: #6c5ce7;
-      animation: popIn 1s ease-out;
+      text-shadow: 2px 2px #ffeaa7;
+      animation: popIn 1.2s ease-out;
     }
 
     p {
-      font-size: 1.2em;
+      font-size: 1.3em;
       margin-bottom: 30px;
-      color: #2d3436;
-      animation: fadeIn 2s;
+      color: #444;
     }
 
     input, button {
-      padding: 14px 20px;
-      margin: 10px;
-      font-size: 1em;
+      padding: 14px 22px;
+      margin: 12px;
+      font-size: 1.1em;
       border: none;
-      border-radius: 12px;
+      border-radius: 15px;
       outline: none;
-      transition: all 0.3s ease;
+      transition: 0.3s ease;
     }
 
     input {
-      width: 240px;
+      width: 250px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      background-color: #fefefe;
     }
 
     input:focus {
       transform: scale(1.05);
-      box-shadow: 0 0 12px rgba(108, 92, 231, 0.6);
+      box-shadow: 0 0 12px #6c5ce7;
     }
 
     button {
-      background-color: #fd79a8;
-      color: white;
+      background: linear-gradient(135deg, #00b894, #00cec9);
+      color: #fff;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     button:hover {
-      background-color: #e84393;
-      transform: scale(1.1) rotate(-2deg);
+      background: linear-gradient(135deg, #0984e3, #6c5ce7);
+      transform: scale(1.08);
     }
 
     .plan {
       margin-top: 40px;
-      padding: 25px;
+      padding: 30px;
       font-weight: bold;
-      background: #ffecec;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px dashed #a29bfe;
       color: #d63031;
-      border: 2px dotted #ff7675;
       border-radius: 20px;
       display: inline-block;
-      width: 60%;
+      width: 70%;
       max-width: 500px;
-      animation: bounceIn 0.8s ease-out;
+      animation: bounceIn 1s ease-out;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
     }
 
     @keyframes popIn {
@@ -84,43 +88,26 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    @keyframes bounceIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-
-    /* Animated background globe */
-    .globe {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 120px;
-      height: 120px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/240px-The_Earth_seen_from_Apollo_17.jpg') no-repeat center/cover;
-      border-radius: 50%;
-      animation: spin 10s linear infinite;
-      opacity: 0.2;
-      z-index: 0;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    /* Emoji confetti drop */
+    @keyframes drop {
+      to {
+        top: 100vh;
+        opacity: 0;
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="globe"></div>
 
-  <h1>🌍 Totally Useless Tour Planner 🌍</h1>
-  <p>Enter your absurd travel plan details for a once-in-a-never experience!</p>
+  <h1>✈️ Totally Useless Tour Planner</h1>
+  <p>Plan your legendary nonsense trip today 🌍</p>
 
   <input id="destination" placeholder="🗺️ Destination"><br>
   <input id="date" type="date"><br>
   <input id="budget" placeholder="💰 Budget"><br>
 
-  <button onclick="generatePlan()">✨ Get My Plan</button>
+  <button onclick="generatePlan()">🎉 Get My Plan</button>
 
   <div class="plan" id="plan"></div>
 
@@ -133,58 +120,47 @@
       "Search for WiFi in a desert 🏜️",
       "Sing karaoke in an elevator 🎤",
       "Visit a museum of lost socks 🧦",
-      "Stare at clouds for 3 hours ☁️"
+      "Stare at clouds for 3 hours ☁️",
+      "Try to race a turtle 🐢",
+      "Interview a pigeon in the park 🐦",
+      "High-five your own shadow ✋"
     ];
 
     function generatePlan() {
-      const dest = document.getElementById("destination").value || "the Void";
-      const activity1 = randomActivity();
-      const activity2 = randomActivity();
-      const activity3 = randomActivity();
+      const dest = document.getElementById("destination").value || "Narnia";
+      const activity1 = getActivity();
+      const activity2 = getActivity();
+      const activity3 = getActivity();
 
-      // Confetti effect (emojis)
       launchEmojiRain();
 
       document.getElementById("plan").innerHTML = `
-        Your Ridiculously Useless Trip to <b>${dest}</b>:<br><br>
-        📆 Day 1: ${activity1}<br>
-        📆 Day 2: ${activity2}<br>
-        📆 Day 3: ${activity3}
+        Your Fantastically Useless Trip to <b>${dest}</b>:<br><br>
+        📅 Day 1: ${activity1}<br>
+        📅 Day 2: ${activity2}<br>
+        📅 Day 3: ${activity3}
       `;
     }
 
-    function randomActivity() {
+    function getActivity() {
       return activities[Math.floor(Math.random() * activities.length)];
     }
 
     function launchEmojiRain() {
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 25; i++) {
         const emoji = document.createElement('div');
-        emoji.textContent = "🎉";
+        emoji.textContent = "🌈";
         emoji.style.position = 'fixed';
         emoji.style.top = '-50px';
         emoji.style.left = Math.random() * window.innerWidth + 'px';
-        emoji.style.fontSize = '24px';
-        emoji.style.zIndex = 999;
-        emoji.style.animation = `drop 1.5s ease-out forwards ${i * 0.1}s`;
+        emoji.style.fontSize = '26px';
+        emoji.style.zIndex = 9999;
+        emoji.style.animation = `drop 2s ease-out forwards ${i * 0.1}s`;
         document.body.appendChild(emoji);
 
         emoji.addEventListener('animationend', () => emoji.remove());
       }
     }
-
-    // Emoji drop animation
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes drop {
-        to {
-          top: 100vh;
-          opacity: 0;
-          transform: rotate(360deg);
-        }
-      }
-    `;
-    document.head.appendChild(style);
   </script>
 </body>
 </html>
