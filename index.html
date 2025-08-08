@@ -9,8 +9,8 @@
     </style>
 </head>
 <body>
-    <h1>Useless Tour Planner</h1>
-    <p>Enter your details for a completely fake travel plan</p>
+    <h1> Tour Planner</h1>
+    <p>Enter your details for a travel plan</p>
     
     <input id="destination" placeholder="Destination"><br>
     <input id="date" type="date"><br>
@@ -39,7 +39,7 @@
             let activity3 = activities[Math.floor(Math.random() * activities.length)];
             
             document.getElementById("plan").innerHTML = 
-                `Your Fake Trip to <b>${dest}</b>:<br>
+                `Your Trip to <b>${dest}</b>:<br>
                 Day 1: ${activity1}<br>
                 Day 2: ${activity2}<br>
                 Day 3: ${activity3}`;
