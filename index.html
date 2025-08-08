@@ -3,46 +3,110 @@
 <head>
     <title>Totally Useless Tour Planner</title>
     <style>
-        body { font-family: Arial; text-align: center; margin: 50px; }
-        input, button { padding: 10px; margin: 5px; }
-        .plan { margin-top: 20px; font-weight: bold; color: purple; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fceabb, #f8b500);
+            text-align: center;
+            padding: 50px;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #6a0572;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        input, button {
+            padding: 12px 18px;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            margin: 10px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input {
+            width: 250px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input:focus {
+            box-shadow: 0 0 10px rgba(106, 5, 114, 0.5);
+        }
+
+        button {
+            background-color: #6a0572;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background-color: #a64ac9;
+            transform: scale(1.05);
+        }
+
+        .plan {
+            margin-top: 30px;
+            padding: 25px;
+            font-weight: bold;
+            color: #4b0082;
+            background-color: #fff0f5;
+            border: 2px dashed #a64ac9;
+            border-radius: 15px;
+            display: inline-block;
+            width: 60%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <h1> Tour Planner</h1>
-    <p>Enter your details for a travel plan</p>
+    <h1>✨ Totally Useless Tour Planner ✨</h1>
+    <p>Enter your details for a nonsense travel experience you'll never forget</p>
     
-    <input id="destination" placeholder="Destination"><br>
+    <input id="destination" placeholder="🗺️ Destination"><br>
     <input id="date" type="date"><br>
-    <input id="budget" placeholder="Budget"><br>
+    <input id="budget" placeholder="💰 Budget"><br>
     
-    <button onclick="generatePlan()">Get My Plan</button>
+    <button onclick="generatePlan()">🎉 Get My Plan</button>
     
     <div class="plan" id="plan"></div>
     
     <script>
         const activities = [
-            "Swim in invisible water",
-            "Climb an upside-down tree",
-            "Attend a snail race",
-            "Have dinner with a statue",
-            "Search for WiFi in a desert",
-            "Sing karaoke with strangers in an elevator",
-            "Visit a museum of lost socks",
-            "Spend 3 hours staring at clouds"
+            "Swim in invisible water 🫧",
+            "Climb an upside-down tree 🌳",
+            "Attend a snail race 🐌",
+            "Have dinner with a statue 🗿",
+            "Search for WiFi in a desert 🏜️",
+            "Sing karaoke with strangers in an elevator 🎤",
+            "Visit a museum of lost socks 🧦",
+            "Spend 3 hours staring at clouds ☁️"
         ];
 
         function generatePlan() {
-            let dest = document.getElementById("destination").value;
+            let dest = document.getElementById("destination").value || "Nowhere";
             let activity1 = activities[Math.floor(Math.random() * activities.length)];
             let activity2 = activities[Math.floor(Math.random() * activities.length)];
             let activity3 = activities[Math.floor(Math.random() * activities.length)];
             
             document.getElementById("plan").innerHTML = 
-                `Your Trip to <b>${dest}</b>:<br>
-                Day 1: ${activity1}<br>
-                Day 2: ${activity2}<br>
-                Day 3: ${activity3}`;
+                `Your Totally Useless Trip to <b>${dest}</b>:<br><br>
+                🗓️ Day 1: ${activity1}<br>
+                🗓️ Day 2: ${activity2}<br>
+                🗓️ Day 3: ${activity3}`;
         }
     </script>
 </body>
