@@ -1,160 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Funny Trip Planner</title>
+    <title>Totally Useless Tour Planner</title>
     <style>
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/World_map_blank_without_borders.svg/2560px-World_map_blank_without_borders.svg.png') no-repeat center center fixed;
-            background-size: cover;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fceabb, #f8b500);
             text-align: center;
-            padding: 30px;
-            color: #4B0082;
+            padding: 50px;
+            color: #333;
         }
 
         h1 {
-            font-size: 3em;
-            color: #ff1493;
-            text-shadow: 2px 2px #fff;
+            font-size: 2.5em;
+            color: #6a0572;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
         }
 
         input, button {
-            padding: 12px;
-            margin: 10px;
-            font-size: 1.1em;
-            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 1em;
             border: none;
+            border-radius: 10px;
+            margin: 10px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input {
+            width: 250px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input:focus {
+            box-shadow: 0 0 10px rgba(106, 5, 114, 0.5);
         }
 
         button {
-            background-color: #ff69b4;
+            background-color: #6a0572;
             color: white;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
         button:hover {
-            transform: scale(1.1);
-            background-color: #ff85c1;
+            background-color: #a64ac9;
+            transform: scale(1.05);
         }
 
-        #spinner {
-            width: 200px;
-            height: 200px;
-            border: 10px dashed #ffa500;
-            border-radius: 50%;
-            margin: 20px auto;
-            animation: spin 4s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(1440deg); }
-        }
-
-        .plan, .packing-list {
-            margin-top: 20px;
-            font-size: 1.2em;
+        .plan {
+            margin-top: 30px;
+            padding: 25px;
             font-weight: bold;
-            color: #9932cc;
-            background-color: rgba(255,255,255,0.7);
-            padding: 20px;
+            color: #4b0082;
+            background-color: #fff0f5;
+            border: 2px dashed #a64ac9;
             border-radius: 15px;
             display: inline-block;
+            width: 60%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <h1>😂 Totally Useless Trip Planner</h1>
-
-    <div>
-        <p>Don't know where to go? Let fate decide!</p>
-        <button onclick="startSpinning()">🎡 Spin for Destination</button>
-        <div id="spinner"></div>
-        <div class="plan" id="finalDestination"></div>
-    </div>
-
-    <div>
-        <p>Already have a place in mind? Type it below!</p>
-        <input id="destination" placeholder="Type a destination">
-        <input id="date" type="date">
-        <input id="budget" placeholder="Budget">
-        <button onclick="generatePlan()">Get My Plan</button>
-    </div>
-
+    <h1>✨ Totally Useless Tour Planner ✨</h1>
+    <p>Enter your details for a nonsense travel experience you'll never forget</p>
+    
+    <input id="destination" placeholder="🗺️ Destination"><br>
+    <input id="date" type="date"><br>
+    <input id="budget" placeholder="💰 Budget"><br>
+    
+    <button onclick="generatePlan()">🎉 Get My Plan</button>
+    
     <div class="plan" id="plan"></div>
-
-    <div>
-        <p>Don't forget these essential (and totally unnecessary) items!</p>
-        <button onclick="showPackingList()">🎒 Get Packing List</button>
-        <div class="packing-list" id="packing"></div>
-    </div>
-
+    
     <script>
         const activities = [
-            "Swim in invisible water",
-            "Climb an upside-down tree",
-            "Attend a snail race",
-            "Have dinner with a statue",
-            "Search for WiFi in a desert",
-            "Sing karaoke with strangers in an elevator",
-            "Visit a museum of lost socks",
-            "Spend 3 hours staring at clouds"
+            "Swim in invisible water 🫧",
+            "Climb an upside-down tree 🌳",
+            "Attend a snail race 🐌",
+            "Have dinner with a statue 🗿",
+            "Search for WiFi in a desert 🏜️",
+            "Sing karaoke with strangers in an elevator 🎤",
+            "Visit a museum of lost socks 🧦",
+            "Spend 3 hours staring at clouds ☁️"
         ];
-
-        const packingItems = [
-            "Banana costume",
-            "Inflatable unicorn",
-            "Pet rock",
-            "Glow-in-the-dark socks",
-            "Emergency rubber chicken",
-            "Invisible map",
-            "Singing toothbrush",
-            "Fake passport for fun"
-        ];
-
-        const realCountries = [
-            "Brazil", "Canada", "France", "Germany", "India", "Italy", "Japan", "Kenya", "Mexico", "Nepal",
-            "Australia", "Thailand", "South Africa", "Argentina", "Spain", "Sweden", "Norway", "China", "Egypt", "Peru",
-            "Turkey", "Russia", "Greece", "Netherlands", "Poland", "Switzerland", "Portugal", "Finland", "Morocco", "Colombia",
-            "Philippines", "Vietnam", "South Korea", "New Zealand", "Ireland", "Malaysia", "Indonesia", "Iceland", "Chile", "Saudi Arabia",
-            "UAE", "Qatar", "Singapore", "Denmark", "Ukraine", "Israel", "Iran", "Belgium", "Austria", "Hungary",
-            "Czech Republic", "Romania", "Slovakia", "Serbia", "Croatia", "Slovenia", "Bulgaria", "Estonia", "Latvia", "Lithuania",
-            "Sri Lanka", "Bangladesh", "Pakistan", "Afghanistan", "Kazakhstan", "Uzbekistan", "Turkmenistan", "Iraq", "Jordan", "Lebanon",
-            "Ethiopia", "Nigeria", "Ghana", "Tanzania", "Uganda", "Zimbabwe", "Zambia", "Mozambique", "Namibia", "Botswana",
-            "Cuba", "Jamaica", "Haiti", "Panama", "Costa Rica", "El Salvador", "Guatemala", "Honduras", "Paraguay", "Uruguay"
-        ];
-
-        function startSpinning() {
-            document.getElementById("spinner").style.animation = "spin 4s linear infinite";
-            setTimeout(() => {
-                document.getElementById("spinner").style.animation = "none";
-                const country = realCountries[Math.floor(Math.random() * realCountries.length)];
-                document.getElementById("finalDestination").innerHTML = `🎯 Your random destination is: <b>${country}</b>!`;
-                document.getElementById("destination").value = country;
-            }, 4000);
-        }
 
         function generatePlan() {
             let dest = document.getElementById("destination").value || "Nowhere";
             let activity1 = activities[Math.floor(Math.random() * activities.length)];
             let activity2 = activities[Math.floor(Math.random() * activities.length)];
             let activity3 = activities[Math.floor(Math.random() * activities.length)];
-
+            
             document.getElementById("plan").innerHTML = 
-                `Your Ridiculous Trip to <b>${dest}</b>:<br>
-                Day 1: ${activity1}<br>
-                Day 2: ${activity2}<br>
-                Day 3: ${activity3}`;
-        }
-
-        function showPackingList() {
-            let funnyItems = [];
-            while (funnyItems.length < 5) {
-                let item = packingItems[Math.floor(Math.random() * packingItems.length)];
-                if (!funnyItems.includes(item)) funnyItems.push(item);
-            }
-            document.getElementById("packing").innerHTML = funnyItems.map(i => `👜 ${i}`).join("<br>");
+                `Your Totally Useless Trip to <b>${dest}</b>:<br><br>
+                🗓️ Day 1: ${activity1}<br>
+                🗓️ Day 2: ${activity2}<br>
+                🗓️ Day 3: ${activity3}`;
         }
     </script>
 </body>
