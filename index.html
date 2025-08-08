@@ -1,166 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>🌈 Totally Useless Tour Planner 🌈</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Ultimate Silly Trip Spinner ✨</title>
     <style>
         body {
             font-family: 'Comic Sans MS', cursive;
-            text-align: center;
             margin: 0;
-            padding: 20px;
-            background: linear-gradient(to right, #ffecd2, #fcb69f);
-            color: #4B0082;
+            padding: 0;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution_gray_political.svg/2000px-World_map_-_low_resolution_gray_political.svg.png');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            gap: 40px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: popIn 1s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .column {
+            flex: 1;
+            text-align: center;
         }
 
         h1 {
+            color: #ff1493;
             font-size: 40px;
-            color: #e91e63;
-            text-shadow: 2px 2px #fff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px white;
         }
 
         input, button {
-            padding: 10px;
-            margin: 10px;
+            padding: 12px;
             border-radius: 10px;
-            border: 2px solid #ff69b4;
+            border: 2px dashed #ff69b4;
+            margin: 10px;
             font-size: 16px;
-            background: #fff0f5;
+            background-color: #fff0f5;
+            color: #8b008b;
         }
 
         button {
-            cursor: pointer;
             background-color: #ff69b4;
             color: white;
             font-weight: bold;
+            cursor: pointer;
+            animation: pulse 1s infinite;
         }
 
-        button:hover {
-            background-color: #e91e63;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
-        .section {
-            background-color: #fff8dc;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 0 10px #888;
+        #wheel {
+            width: 250px;
+            height: 250px;
+            border: 10px solid #ff69b4;
+            border-radius: 50%;
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+            animation: spinEnter 2s ease;
         }
 
-        ul {
-            list-style-type: '💼 ';
-            padding-left: 20px;
+        @keyframes spinEnter {
+            from { transform: rotate(360deg); opacity: 0; }
+            to { transform: rotate(0deg); opacity: 1; }
         }
 
-        .emoji-title {
-            font-size: 24px;
-            color: #8b0000;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .plan-output {
-            font-size: 18px;
+        .spin-result {
+            font-size: 20px;
             color: #4b0082;
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>🌍 Totally Useless Tour Planner 🧳</h1>
+    <div class="container">
+        <div class="column">
+            <h1>🌺 Spin Your Destination</h1>
+            <input id="destinationInput" placeholder="Or type a place">
+            <button onclick="spinWheel()">🌟 Spin The Wheel</button>
+            <div id="wheel"></div>
+            <div class="spin-result" id="spinResult"></div>
+        </div>
 
-    <div class="section">
-        <p><strong>Enter a place you want to visit (or spin if you're feeling lucky 🎡):</strong></p>
-        <input id="destination" placeholder="Type your dream (or nightmare) destination"><br>
-        <input id="date" type="date"><br>
-        <input id="budget" placeholder="Budget in imaginary currency"><br>
-
-        <button onclick="spinDestination()">🎡 Spin for Destination</button>
-        <button onclick="generatePlan()">🛫 Generate Useless Plan</button>
-        <button onclick="generatePackingList()">🎒 Get Silly Packing List</button>
-    </div>
-
-    <div class="section">
-        <div class="emoji-title">📍 Selected Destination</div>
-        <div class="plan-output" id="spinResult"></div>
-    </div>
-
-    <div class="section">
-        <div class="emoji-title">🗺️ Your Totally Useless Itinerary</div>
-        <div class="plan-output" id="plan"></div>
-    </div>
-
-    <div class="section">
-        <div class="emoji-title">🧳 Must-Carry Totally Useless Items</div>
-        <div class="plan-output" id="packingList"></div>
+        <div class="column">
+            <h1>🏡 Funny Packing List</h1>
+            <button onclick="generatePackingList()">🎒 Generate List</button>
+            <div id="packingList"></div>
+        </div>
     </div>
 
     <script>
-        const destinations = [
-            "Toilet Paper Mountain 🧻⛰️",
-            "Boredom Bay 😑🌊",
-            "Fridge-top Island 🧊🏝️",
-            "Sofa City 🛋️",
-            "Snailville 🐌",
-            "NoSignal Desert 📵🏜️",
-            "Area 52 👽",
-            "Bubble Wrap Fields 🫧",
-            "Under Your Bed 😱",
-            "Upside-Down Town 🔄"
-        ];
-
-        const activities = [
-            "Count grains of sand on a fake beach 🏖️",
-            "Attend a rock concert... starring actual rocks 🎸🪨",
-            "Have tea with invisible friends ☕🫥",
-            "Search for WiFi signals in the jungle 🌴📶",
-            "Yodel in an elevator with strangers 🎤🚪",
-            "Stare at clouds until they blink ☁️👀",
-            "Interview pigeons in the park 🐦🎤",
-            "Do yoga with lazy cats 🧘🐱"
-        ];
+        const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Chad", "Chile", "China", "Colombia", "Comoros", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mexico", "Micronesia", "Moldova"];
 
         const packingItems = [
-            "Left sock only 🧦",
-            "Chewed pencil ✏️",
-            "Self-charging banana 🍌",
-            "Anti-gravity toothpaste 🪥",
-            "Glow-in-the-dark earmuffs 🌟",
-            "Invisible comb 🪮",
-            "Plastic spoon for soupless nights 🥄",
-            "Reverse sunglasses 🕶️",
-            "Backup unicorn horn 🦄",
-            "Screaming rubber duck 🦆"
-        ];
+            "Banana umbrella 🍌🌧️", "Invisible sunscreen 🚫🌞", "Jetpack toothbrush 🚀🪪", "Portable nap zone 🌚", "Left shoe only 🥾", "Cat translator 😺🎧", "Rainbow raincoat 🌈🌧", "Emergency glitter bomb 🎇", "Toilet paper crown 🪼👑", "Marshmallow pillow 🥜"];
 
-        function spinDestination() {
-            let randomPlace = destinations[Math.floor(Math.random() * destinations.length)];
-            document.getElementById("destination").value = randomPlace;
-            document.getElementById("spinResult").innerHTML = `🎯 Your lucky (or unlucky) destination is: <b>${randomPlace}</b>`;
-        }
-
-        function generatePlan() {
-            let dest = document.getElementById("destination").value;
-            if (!dest) {
-                spinDestination();
-                dest = document.getElementById("destination").value;
+        function spinWheel() {
+            const input = document.getElementById("destinationInput").value;
+            let selected;
+            if (input.trim() !== "") {
+                selected = input;
+            } else {
+                selected = countries[Math.floor(Math.random() * countries.length)];
             }
+            const wheel = document.getElementById("wheel");
+            const spinDegrees = 3600 + Math.floor(Math.random() * 360);
+            wheel.style.transition = "transform 4s ease-out";
+            wheel.style.transform = `rotate(${spinDegrees}deg)`;
 
-            let act1 = activities[Math.floor(Math.random() * activities.length)];
-            let act2 = activities[Math.floor(Math.random() * activities.length)];
-            let act3 = activities[Math.floor(Math.random() * activities.length)];
-
-            document.getElementById("plan").innerHTML = `
-                ✈️ Day 1: ${act1}<br>
-                🧭 Day 2: ${act2}<br>
-                🎢 Day 3: ${act3}<br>
-                🏁 Destination: <strong>${dest}</strong><br>`;
+            setTimeout(() => {
+                document.getElementById("spinResult").innerHTML = `🌍 Pack your bags! You're going to <b>${selected}</b>!`;
+            }, 4200);
         }
 
         function generatePackingList() {
-            let randomItems = packingItems.sort(() => 0.5 - Math.random()).slice(0, 5);
-            document.getElementById("packingList").innerHTML = `
-                <ul>${randomItems.map(item => `<li>${item}</li>`).join('')}</ul>`;
+            const list = packingItems.sort(() => 0.5 - Math.random()).slice(0, 5);
+            document.getElementById("packingList").innerHTML =
+                "<ul style='text-align: left; font-size: 18px; color: #ff1493;'>" +
+                list.map(item => `<li>${item}</li>`).join('') +
+                "</ul>";
         }
     </script>
 </body>
